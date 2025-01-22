@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -18,5 +19,11 @@ public class GameService {
         return result.stream().map(x-> new GameMinDTO(x)).toList();
     }
 
-    
+    public Game findOne(Long id){
+        Optional<Game> optionalGame = gameRepository.findById(id);
+        if(optionalGame.isPresent()){
+            return  optionalGame.get();
+        }
+        throw new RuntimeException("Game not found");
+    }
 }
