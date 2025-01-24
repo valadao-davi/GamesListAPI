@@ -1,13 +1,11 @@
 package com.valadao_davi.gamesList.controllers;
 import com.valadao_davi.gamesList.dto.GameListDTO;
 import com.valadao_davi.gamesList.dto.GameMinDTO;
+import com.valadao_davi.gamesList.dto.ReplacementDTO;
 import com.valadao_davi.gamesList.services.GameListService;
 import com.valadao_davi.gamesList.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,4 +28,10 @@ public class GameListController {
     public List<GameMinDTO> findById(@PathVariable Long listId){
         return gameService.findByList(listId);
     }
+
+    @PostMapping (value = "/{listId}/replacement")
+    public void listReplacement(@PathVariable Long listId, @RequestBody ReplacementDTO replacementDTO){
+        gameListService.move(listId, replacementDTO.getSourceIndex(), replacementDTO.getDestinationIndex());
+    }
+
 }
